@@ -1,0 +1,83 @@
+
+CREATE TABLE Book(
+  BookID serial PRIMARY KEY,
+	Title varchar(225),
+	description varchar(225),
+	ISBN char(13)
+);
+
+CREATE TABLE Authors(
+  AuthorID serial PRIMARY KEY,
+  Name varchar(225),
+  BIO  varchar(225)	
+);
+
+CREATE TABLE Genres(
+ GenresID serial PRIMARY KEY,
+ Name varchar(225),
+ description varchar(225)	
+);
+
+CREATE TABLE Books_author(
+  is_main_Author boolean
+);
+
+ALTER TABLE Books_author ADD COLUMN Book_ID INT;
+
+ALTER TABLE Books_author ADD COLUMN Author_ID int;
+
+ALTER TABLE Books_author ADD FOREIGN KEY (Book_ID) REFERENCES Book(BookID);
+
+ALTER TABLE Books_author ADD FOREIGN KEY (Author_ID) REFERENCES Authors(AuthorID);
+
+ALTER TABLE Book ADD COLUMN Genres_ID int;
+
+ALTER TABLE Genres ADD FOREIGN KEY (GenresID) REFERENCES Book(Genres_ID);
+
+ALTER TABLE Book ADD UNIQUE (Genres_ID);
+
+-- Data manipulation language
+
+INSERT INTO authors VALUES 
+(01, 'Larry King','Died at 87 years old from Brooklyn, new york city'),
+(02, 'Chris Voss','65 years old, Pleasant Lowa'),
+(03, 'Hal Elrod','44 years old, california'),
+(04, 'Mel Robbins','55 years old, Kansas city missouri'),
+(05, 'Mark Manson','39 years old, New york city');
+
+INSERT INTO book VALUES 
+(1,'How to talk to anyone','Secret','0517884534'),
+(2,'Never split the difference','Negotiate','9781847941497'),
+(3,'miracle morning','habits','9781682622385'),
+(4,'5 seconds rule','Transform','9781682612385'),
+(5,'subtle art of not given a fuck','living','9780062457714');
+
+
+INSERT INTO genres VALUES
+(101,'SELF HELP','for personal growth');
+
+UPDATE book SET genres_id= '101' where bookid= 1;
+UPDATE book SET genres_id= '102' where bookid= 2;
+UPDATE book SET genres_id= '103' where bookid= 3;
+UPDATE book SET genres_id= '104' where bookid= 4;
+UPDATE book SET genres_id= '105' where bookid= 5;
+
+
+--- Data Query Language
+
+SELECT * FROM authors; 
+SELECT * FROM book;
+SELECT * FROM genres;
+SELECT * FROM books_author;
+
+
+INSERT INTO books_author VALUES
+('true','01','1'),
+('true','02','2'),
+('true','03','3'),
+('true','04','4'),
+('true','05','5');
+
+
+
+
